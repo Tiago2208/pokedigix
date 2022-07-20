@@ -8,6 +8,10 @@ import javax.persistence.Id;
 
 @Entity
 public class Ataque {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+   
     private int forca;
     private int acuracia;
     private int pontosDePoder;
@@ -18,9 +22,6 @@ public class Ataque {
     @Column(nullable = false, length = 15)
     private String nome;
     private Categoria categoria;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     public Ataque(int forca, int acuracia, int pontosDePoder, String descricao, String nome, Categoria categoria) {
         this.forca = forca;
         this.acuracia = acuracia;

@@ -7,6 +7,7 @@ public class Ataque {
     private String descricao;
     private String nome;
     private Categoria categoria;
+    private Long id;
     public Ataque(int forca, int acuracia, int pontosDePoder, String descricao, String nome, Categoria categoria) {
         this.forca = forca;
         this.acuracia = acuracia;
@@ -50,5 +51,11 @@ public class Ataque {
     }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 }

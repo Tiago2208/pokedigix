@@ -1,10 +1,33 @@
 package br.com.digix.pokedigix.endereco;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Endereco {
-    private String regiao;
-    private String cidade;
-    public Endereco(String regiao, String cidade) {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    @Column(nullable = false, length = 35)
+    String cidade;
+    
+    @Column(nullable = false, length = 35)
+    String regiao;
+    
+    
+    public Endereco(String cidade, String regiao) {
+        this.cidade = cidade;
         this.regiao = regiao;
+    }
+    public String getCidade() {
+        return cidade;
+    }
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
     public String getRegiao() {
@@ -13,10 +36,10 @@ public class Endereco {
     public void setRegiao(String regiao) {
         this.regiao = regiao;
     }
-    public String getCidade() {
-        return cidade;
+    public Long getId() {
+        return this.id;
     }
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

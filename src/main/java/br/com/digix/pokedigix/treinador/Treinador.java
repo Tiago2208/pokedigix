@@ -1,16 +1,33 @@
 package br.com.digix.pokedigix.treinador;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import br.com.digix.pokedigix.endereco.Endereco;
-import br.com.digix.pokedigix.pokemon.Pokemon;
 
+
+@Entity
 public class Treinador {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)    
+    private Long id;
+    
+    
     private String nome;
+    
     private int nivel;
-    private int dinheiro;
+    
+    private double dinheiro;
+    
+    @OneToOne
     private Endereco endereco;
-    Pokemon pokemon;
+    
 
-    public Treinador(String nome, int nivel, int dinheiro, Endereco endereco) {
+    public Treinador(String nome, int nivel, double dinheiro, Endereco endereco) {
         this.nome = nome;
         this.nivel = nivel;
         this.dinheiro = dinheiro;
@@ -28,10 +45,10 @@ public class Treinador {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
-    public int getDinheiro() {
+    public double getDinheiro() {
         return dinheiro;
     }
-    public void setDinheiro(int dinheiro) {
+    public void setDinheiro(double dinheiro) {
         this.dinheiro = dinheiro;
     }
     public Endereco getEndereco() {
@@ -39,5 +56,8 @@ public class Treinador {
     }
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+    public Long getId() {
+        return this.id;
     }
 }

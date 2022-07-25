@@ -20,9 +20,6 @@ public class Pokemon {
     @Column(nullable = false)
     private int nivel;
     
-    @Column(nullable = false, length = 20)
-    private String tipo;
-    
     @Column(nullable = false)
     private double altura;
     
@@ -30,7 +27,7 @@ public class Pokemon {
     private double peso;
     
     @Column(nullable = false, length = 15)
-    private String genero;
+    private Genero genero;
     
     @Column(nullable = false)
     private int numeroDaPokedex;
@@ -39,11 +36,10 @@ public class Pokemon {
     private int felicidade;
     
     
-    public Pokemon(String nome, int nivel, String tipo, double altura, double peso, String genero, int numeroDaPokedex,
+    public Pokemon(String nome, int nivel, double altura, double peso, Genero genero, int numeroDaPokedex,
     int felicidade) {
         this.nome = nome;
         this.nivel = nivel;
-        this.tipo = tipo;
         this.altura = altura;
         this.peso = peso;
         this.genero = genero;
@@ -62,12 +58,6 @@ public class Pokemon {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
-    public String getTipo() {
-        return tipo;
-    }
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
     public double getAltura() {
         return altura;
     }
@@ -80,10 +70,10 @@ public class Pokemon {
     public void setPeso(double peso) {
         this.peso = peso;
     }
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
     public int getNumeroDaPokedex() {

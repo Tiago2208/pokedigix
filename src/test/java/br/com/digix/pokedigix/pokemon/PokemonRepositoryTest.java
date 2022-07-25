@@ -1,6 +1,5 @@
 package br.com.digix.pokedigix.pokemon;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
@@ -17,15 +16,14 @@ public class PokemonRepositoryTest {
     public void deve_salvar_um_pokemon() {
         String nomeEsperado = "Charmander";
         int nivelEsperado = 15;
-        String tipoEsperado = "Fogo";
         double alturaEsperada = 0.90;
         double pesoEsperado = 10.0;
-        String generoEsperado = "Masculino";
+        Genero generoEsperado = Genero.MASCULINO;
         int numeroDaPokedexEsperado = 4;
         int felicidadeEsperada = 100;
 
 
-        Pokemon pokemon = new Pokemon(nomeEsperado, nivelEsperado, tipoEsperado, alturaEsperada, pesoEsperado, generoEsperado, numeroDaPokedexEsperado, felicidadeEsperada);
+        Pokemon pokemon = new Pokemon(nomeEsperado, nivelEsperado, alturaEsperada, pesoEsperado, generoEsperado, numeroDaPokedexEsperado, felicidadeEsperada);
         pokemonRepository.save(pokemon);
 
         assertNotNull(pokemon.getId());

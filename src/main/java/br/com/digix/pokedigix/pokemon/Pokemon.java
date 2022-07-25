@@ -2,6 +2,8 @@ package br.com.digix.pokedigix.pokemon;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ public class Pokemon {
     @Column(nullable = false) 
     private double peso;
     
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 15)
     private Genero genero;
     

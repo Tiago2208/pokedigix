@@ -1,5 +1,7 @@
 package br.com.digix.pokedigix.pokemon;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import br.com.digix.pokedigix.tipo.Tipo;
 
 
 @Entity
@@ -37,10 +42,13 @@ public class Pokemon {
     
     @Column(nullable = false)
     private int felicidade;
+
+    @ManyToMany
+    private Collection<Tipo> tipos;
     
     
     public Pokemon(String nome, int nivel, double altura, double peso, Genero genero, int numeroDaPokedex,
-    int felicidade) {
+    int felicidade, Collection<Tipo> tipos) {
         this.nome = nome;
         this.nivel = nivel;
         this.altura = altura;
@@ -48,6 +56,7 @@ public class Pokemon {
         this.genero = genero;
         this.numeroDaPokedex = numeroDaPokedex;
         this.felicidade = felicidade;
+        this.tipos = tipos;
     }
     public String getNome() {
         return nome;
@@ -96,5 +105,8 @@ public class Pokemon {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public Collection<Tipo> getTipos() {
+        return tipos;
     }
 }

@@ -2,7 +2,12 @@ package br.com.digix.pokedigix.pokemon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+
+import br.com.digix.pokedigix.tipo.Tipo;
 
 public class PokemonTest {
     @Test
@@ -15,9 +20,11 @@ public class PokemonTest {
         Genero generoEsperado = Genero.MASCULINO;
         int numeroDaPokedexEsperado = 4;
         int felicidadeEsperada = 100;
+        List<Tipo> tiposEsperados = new ArrayList<>();
+        tiposEsperados.add(new Tipo("Fogo"));
 
         // Act
-        Pokemon pokemon = new Pokemon(nomeEsperado, nivelEsperado, alturaEsperada, pesoEsperado, generoEsperado, numeroDaPokedexEsperado, felicidadeEsperada);
+        Pokemon pokemon = new Pokemon(nomeEsperado, nivelEsperado, alturaEsperada, pesoEsperado, generoEsperado, numeroDaPokedexEsperado, felicidadeEsperada, tiposEsperados);
         
         // Assert
         assertEquals(nomeEsperado, pokemon.getNome());
@@ -28,5 +35,26 @@ public class PokemonTest {
         assertEquals(numeroDaPokedexEsperado, pokemon.getNumeroDaPokedex());
         assertEquals(felicidadeEsperada, pokemon.getFelicidade());
 
+    }
+
+    @Test
+    public void deve_cadastrar_um_tipo_para_o_pokemon() {
+                // Arrange
+                String nomeEsperado = "Charmander";
+                int nivelEsperado = 15;
+                double alturaEsperada = 0.90;
+                double pesoEsperado = 10.0;
+                Genero generoEsperado = Genero.MASCULINO;
+                int numeroDaPokedexEsperado = 4;
+                int felicidadeEsperada = 100;
+                List<Tipo> tiposEsperados = new ArrayList<>();
+                tiposEsperados.add(new Tipo("Fogo"));
+        
+                // Act
+                Pokemon charmander = new Pokemon(nomeEsperado, nivelEsperado, alturaEsperada, pesoEsperado, generoEsperado, numeroDaPokedexEsperado, felicidadeEsperada, tiposEsperados);
+                
+                // Assert
+                assertEquals(tiposEsperados, charmander.getTipos());
+               
     }
 }

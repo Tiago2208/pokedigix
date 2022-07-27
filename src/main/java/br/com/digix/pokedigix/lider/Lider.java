@@ -1,30 +1,28 @@
+
 package br.com.digix.pokedigix.lider;
 
-public class Lider {
-    private String nome;
-    private int nivel;
-    private String insignia;
-    public Lider(String nome, int nivel, String insignia) {
-        this.nome = nome;
-        this.nivel = nivel;
+import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import br.com.digix.pokedigix.endereco.Endereco;
+import br.com.digix.pokedigix.personagem.Personagem;
+import br.com.digix.pokedigix.pokemon.Pokemon;
+
+@Entity
+public class Lider extends Personagem {
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Insignia insignia;
+
+    public Lider(String nome, Endereco endereco, Collection<Pokemon> pokemons, Insignia insignia) {
+        super(nome, endereco);
+        super.pokemons = pokemons;
         this.insignia = insignia;
     }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public int getNivel() {
-        return nivel;
-    }
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
-    }
-    public String getInsignia() {
-        return insignia;
-    }
-    public void setInsignia(String insignia) {
-        this.insignia = insignia;
-    }
+    
 }

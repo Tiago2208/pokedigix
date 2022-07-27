@@ -1,29 +1,27 @@
-package br.com.digix.pokedigix.treinador;
-
+package br.com.digix.pokedigix.personagem;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import br.com.digix.pokedigix.endereco.Endereco;
+import br.com.digix.pokedigix.treinador.Treinador;
+import br.com.digix.pokedigix.treinador.TreinadorRepository;
 
 @DataJpaTest
 public class TreinadorRepositoryTest {
+
     @Autowired
     private TreinadorRepository treinadorRepository;
-    
+
     @Test
     public void deve_salvar_um_treinador() {
-        String nomeEsperado = "Ash";
-        int nivelEsperado = 30;
-        double dinheiroEsperado = 10000000.0;
-        Endereco enderecoEsperado = new Endereco("Pallet", "Kanto");
+        // Arrange
+        Treinador treinador = new TreinadorBuilder().construir();
 
-        Treinador treinador = new Treinador(nomeEsperado, nivelEsperado, dinheiroEsperado, enderecoEsperado);
-        
+        // Act
         treinadorRepository.save(treinador);
-
+        
+        // Assert
         assertNotNull(treinador.getId());
     }
 }

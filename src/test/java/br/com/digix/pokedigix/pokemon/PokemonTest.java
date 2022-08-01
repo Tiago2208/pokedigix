@@ -14,7 +14,7 @@ import br.com.digix.pokedigix.tipo.Tipo;
 
 public class PokemonTest {
     @Test
-    public void deve_criar_um_pokemon() {
+    public void deve_criar_um_pokemon() throws Exception {
         // Arrange
         String nomeEsperado = "Charmander";
         int nivelEsperado = 15;

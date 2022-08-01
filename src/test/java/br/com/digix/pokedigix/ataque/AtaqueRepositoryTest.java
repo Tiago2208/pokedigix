@@ -23,7 +23,7 @@ public class AtaqueRepositoryTest {
     private TipoRepository tipoRepository;
 
     @Test
-    public void deve_salvar_um_ataque() {
+    public void deve_salvar_um_ataque() throws Exception {
         String nomeEsperado = "Flamethrower";
         int forcaEsperada = 100;
         int acuraciaEsperada = 100;
@@ -39,7 +39,7 @@ public class AtaqueRepositoryTest {
     }
 
     @Test
-    public void deve_salvar_um_tipo_para_um_ataque() {
+    public void deve_salvar_um_tipo_para_um_ataque() throws Exception {
         String nomeEsperado = "Flamethrower";
         int forcaEsperada = 100;
         int acuraciaEsperada = 100;
@@ -58,7 +58,7 @@ public class AtaqueRepositoryTest {
         assertNotNull(ataqueRetornado.getTipo().getId());
     }
     @Test
-    public void deve_buscar_um_ataque_pelo_seu_tipo() {
+    public void deve_buscar_um_ataque_pelo_seu_tipo() throws Exception {
         String nomeEsperado = "Flamethrower";
         int forcaEsperada = 100;
         int acuraciaEsperada = 100;
@@ -80,7 +80,7 @@ public class AtaqueRepositoryTest {
 
     }
     @Test
-    public void deve_buscar_um_ataque_pela_sua_categoria() {
+    public void deve_buscar_um_ataque_pela_sua_categoria() throws Exception {
         String nomeEsperado = "Flamethrower";
         int forcaEsperada = 100;
         int acuraciaEsperada = 100;

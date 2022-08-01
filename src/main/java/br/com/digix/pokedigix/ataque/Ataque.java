@@ -46,14 +46,38 @@ public class Ataque {
     @ManyToMany(mappedBy = "ataques")
     private Collection<Pokemon> pokemons;
     
-    public Ataque(int forca, int acuracia, int pontosDePoder, String descricao, String nome, Categoria categoria, Tipo tipo) {
-        this.forca = forca;
+    public Ataque(int forca, int acuracia, int pontosDePoder, String descricao, String nome, Categoria categoria, Tipo tipo) throws Exception {
+    
+    validarAcuracia(acuracia);
+    validarForca(categoria, forca);
+    validarTipo(categoria, tipo);
+    
+    this.forca = forca;
         this.acuracia = acuracia;
         this.pontosDePoder = pontosDePoder;
         this.descricao = descricao;
         this.nome = nome;
         this.categoria = categoria;
         this.tipo = tipo;
+    }
+    private void validarTipo(Categoria categoria, Tipo tipo) throws TipoInvalidoParaCategoriaException {
+        if( !categoria.equals(Categoria.EFEITO) && tipo == null) {
+            throw new TipoInvalidoParaCategoriaException(categoria);
+        }
+    }
+    public Ataque(int acuracia, int pontosDePoderEsperado, String descricaoEsperada, String nomeEsperado) throws Exception {
+        validarAcuracia(acuracia);
+        this.acuracia = acuracia;
+        this.pontosDePoder = pontosDePoderEsperado;
+        this.descricao = descricaoEsperada;
+        this.nome = nomeEsperado;
+        this.categoria = Categoria.EFEITO;
+        
+    }
+    private void validarForca(Categoria categoria, int forca) throws Exception {
+        if( (!categoria.equals(Categoria.EFEITO)) && forca <= 0) {
+            throw new ForcaInvalidaParaCategoriaException(categoria);
+        }
     }
     public int getForca() {
         return forca;
@@ -102,5 +126,10 @@ public class Ataque {
     }
     public Collection<Pokemon> getPokemons() {
         return pokemons;
+    }
+    private void validarAcuracia(int acuracia) throws Exception {
+        if(acuracia < 0 || acuracia > 100) {
+            throw new AcuraciaInvalidaException();
+        }
     }
 }

@@ -13,15 +13,16 @@ public class AtaqueBuilder {
     private Tipo tipoEsperado;
 
     
-    public Ataque construir() {
-        return new Ataque(forcaEsperada, acuraciaEsperada, pontosDePoderEsperado, descricaoEsperada, nomeEsperado, categoriaEsperada, tipoEsperado);
-    }
     
     public AtaqueBuilder comTipo(Tipo tipoEsperado) {
         this.tipoEsperado = tipoEsperado;
         return this;
     }
     
+    public AtaqueBuilder comAcuracia(int acuracia) {
+        this.acuraciaEsperada = acuracia;
+        return this;
+    }
     public AtaqueBuilder() {
         this.nomeEsperado = "Flamethrower";
         this.forcaEsperada = 100;
@@ -30,5 +31,28 @@ public class AtaqueBuilder {
         this.descricaoEsperada = "cospe fogo";
         this.categoriaEsperada = Categoria.ESPECIAL;
         this.tipoEsperado = new Tipo("Fogo");
+    }
+    
+    public Ataque construir() throws Exception {
+        if(this.categoriaEsperada.equals(Categoria.EFEITO)) {
+            return new Ataque(acuraciaEsperada, pontosDePoderEsperado, descricaoEsperada, nomeEsperado);
+        } else {
+            return new Ataque (forcaEsperada, acuraciaEsperada, pontosDePoderEsperado, descricaoEsperada, nomeEsperado, categoriaEsperada, tipoEsperado);
+        }
+    }
+
+    public AtaqueBuilder comCategoriaEfeito() {
+        this.categoriaEsperada = Categoria.EFEITO;
+        return this;
+    }
+
+    public AtaqueBuilder comForca(int forca) {
+        this.forcaEsperada = forca;
+        return this;
+    }
+
+    public AtaqueBuilder comCategoria(Categoria categoria) {
+        this.categoriaEsperada = categoria;
+        return this;
     }
 }

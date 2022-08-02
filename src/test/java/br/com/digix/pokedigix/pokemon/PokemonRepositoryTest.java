@@ -21,7 +21,7 @@ public class PokemonRepositoryTest {
     private PokemonRepository pokemonRepository;
 
     @Test
-    public void deve_salvar_um_pokemon() {
+    public void deve_salvar_um_pokemon() throws NivelInvalidoDoPokemonException, FelicidadeInvalidaException {
         Pokemon pokemon = new PokemonBuilder().construir();
         pokemonRepository.save(pokemon);
 
@@ -29,7 +29,7 @@ public class PokemonRepositoryTest {
     }
 
     @Test
-    public void deve_salvar_um_pokemon_com_um_tipo() {
+    public void deve_salvar_um_pokemon_com_um_tipo() throws NivelInvalidoDoPokemonException, FelicidadeInvalidaException {
         int quantidadeDeTiposEsperada = 1;
         Tipo fogo = new Tipo("Fogo");
         Pokemon charmander = new PokemonBuilder().comTipo(fogo).construir();

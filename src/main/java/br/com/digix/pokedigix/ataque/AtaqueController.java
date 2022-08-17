@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.digix.pokedigix.tipo.Tipo;
+import br.com.digix.pokedigix.tipo.TipoRepository;
 import br.com.digix.pokedigix.tipo.TipoResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,13 +26,18 @@ public class AtaqueController {
     @Autowired
     private AtaqueRepository ataqueRepository;
 
-    @Operation(summary = "Criar um novo ataque que pode ser usado para Pokemons")
+    @Autowired
+    private TipoRepository tipoRepository;
+
+    @Operation(summary = "Criar um novo ataque usando tipos")
     @ApiResponse(responseCode = "201")
     @PostMapping(consumes = { "application/json" })
-    public ResponseEntity<AtaqueResponseDTO> criartTipo(@RequestBody AtaqueRequestDTO novoAtaque) {
-        Ataque ataque = new Ataque(forca, acuracia, pontosDePoder, descricao, nome, categoria, tipo);
+    public ResponseEntity<AtaqueResponseDTO> criartTipo(@RequestBody AtaqueRequestDTO novoAtaque) throws Exception {
+        Tipo tipo = tipoRepository.findById(novoAtaque.getTipoId()).get();
+        Ataque ataque = new Ataque(novoAtaque.getForca(), novoAtaque.getAcuracia(), novoAtaque.getPontosDePoder(), novoAtaque.getDescricao(), novoAtaque.getNome(), novoAtaque.getCategoria(), tipo);
         ataqueRepository.save(ataque);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AtaqueResponseDTO(ataque.getId(), ataque.getAcuracia(), ataque.getForca(), ataque.getPontosDePoder(), ataque.getDescricao(), ataque.getNome(), ataque.getCategoria(), tipo));
+        TipoResponseDTO tipoResponseDTO = new TipoResponseDTO(tipo.getId(), tipo.getNome());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AtaqueResponseDTO(ataque.getId(), ataque.getAcuracia(), ataque.getForca(), ataque.getPontosDePoder(), ataque.getDescricao(), ataque.getNome(), ataque.getCategoria(), tipoResponseDTO));
     }
 
 

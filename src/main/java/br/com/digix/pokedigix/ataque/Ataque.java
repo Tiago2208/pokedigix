@@ -48,7 +48,7 @@ public class Ataque {
     
     protected Ataque() {}
     
-    public Ataque(int forca, int acuracia, int pontosDePoder, String descricao, String nome, Categoria categoria, Tipo tipo) throws Exception {
+    public Ataque(int forca, int acuracia, int pontosDePoder, String descricao, String nome, Categoria categoria, Tipo tipo) throws AcuraciaInvalidaException, ForcaInvalidaParaCategoriaException, TipoInvalidoParaCategoriaException  {
     
     validarAcuracia(acuracia);
     validarForca(categoria, forca);
@@ -67,7 +67,7 @@ public class Ataque {
             throw new TipoInvalidoParaCategoriaException(categoria);
         }
     }
-    public Ataque(int acuracia, int pontosDePoderEsperado, String descricaoEsperada, String nomeEsperado) throws Exception {
+    public Ataque(int acuracia, int pontosDePoderEsperado, String descricaoEsperada, String nomeEsperado) throws AcuraciaInvalidaException {
         validarAcuracia(acuracia);
         this.acuracia = acuracia;
         this.pontosDePoder = pontosDePoderEsperado;
@@ -76,9 +76,14 @@ public class Ataque {
         this.categoria = Categoria.EFEITO;
         
     }
-    private void validarForca(Categoria categoria, int forca) throws Exception {
+    private void validarForca(Categoria categoria, int forca) throws ForcaInvalidaParaCategoriaException {
         if( (!categoria.equals(Categoria.EFEITO)) && forca <= 0) {
             throw new ForcaInvalidaParaCategoriaException(categoria);
+        }
+    }
+    private void validarAcuracia(int acuracia) throws AcuraciaInvalidaException {
+        if(acuracia < 0 || acuracia > 100) {
+            throw new AcuraciaInvalidaException();
         }
     }
     public int getForca() {
@@ -128,10 +133,5 @@ public class Ataque {
     }
     public Collection<Pokemon> getPokemons() {
         return pokemons;
-    }
-    private void validarAcuracia(int acuracia) throws Exception {
-        if(acuracia < 0 || acuracia > 100) {
-            throw new AcuraciaInvalidaException();
-        }
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,15 +33,24 @@ public class AtaqueController {
     @Operation(summary = "Criar um novo ataque usando tipos")
     @ApiResponse(responseCode = "201")
     @PostMapping(consumes = { "application/json" })
-    public ResponseEntity<AtaqueResponseDTO> criartTipo(@RequestBody AtaqueRequestDTO novoAtaque) throws Exception {
+    public ResponseEntity<AtaqueResponseDTO> criartTipo(@RequestBody AtaqueRequestDTO novoAtaque) {
         Tipo tipo = tipoRepository.findById(novoAtaque.getTipoId()).get();
-        Ataque ataque = new Ataque(novoAtaque.getForca(), novoAtaque.getAcuracia(), novoAtaque.getPontosDePoder(), novoAtaque.getDescricao(), novoAtaque.getNome(), novoAtaque.getCategoria(), tipo);
-        ataqueRepository.save(ataque);
-        TipoResponseDTO tipoResponseDTO = new TipoResponseDTO(tipo.getId(), tipo.getNome());
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AtaqueResponseDTO(ataque.getId(), ataque.getAcuracia(), ataque.getForca(), ataque.getPontosDePoder(), ataque.getDescricao(), ataque.getNome(), ataque.getCategoria(), tipoResponseDTO));
+        Ataque ataque;
+        try {
+            ataque = new Ataque(novoAtaque.getForca(), novoAtaque.getAcuracia(), novoAtaque.getPontosDePoder(),
+                    novoAtaque.getDescricao(), novoAtaque.getNome(), novoAtaque.getCategoria(), tipo);
+            ataqueRepository.save(ataque);
+            TipoResponseDTO tipoResponseDTO = new TipoResponseDTO(tipo.getId(), tipo.getNome());
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new AtaqueResponseDTO(ataque.getId(), ataque.getAcuracia(), ataque.getForca(),
+                            ataque.getPontosDePoder(), ataque.getDescricao(), ataque.getNome(), ataque.getCategoria(),
+                            tipoResponseDTO));
+        } catch (AcuraciaInvalidaException | ForcaInvalidaParaCategoriaException | TipoInvalidoParaCategoriaException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+
     }
-
-
 
     @Operation(summary = "Buscar todos os ataques registrados sem ordem")
     @ApiResponse(responseCode = "200", description = "Lista de ataques registrados")
@@ -76,5 +86,23 @@ public class AtaqueController {
                 tipoResponseDTO));
     }
 
-    
+    @Operation(summary = "Altera um tipo de ataque")
+    @ApiResponse(responseCode = "200")
+    @PutMapping(consumes = { "application/json" }, path = { "/{id}" })
+    public ResponseEntity<AtaqueResponseDTO> alterarTipo(@RequestBody AtaqueRequestDTO ataqueRequestDTO,
+            @PathVariable Long id) {
+
+        Ataque ataque = ataqueRepository.findById(id).get();
+        TipoResponseDTO tipo = new TipoResponseDTO(ataque.getTipo().getId(), ataque.getTipo().getNome());
+
+        ataque.setNome(ataqueRequestDTO.getNome());
+        ataque.setAcuracia(ataqueRequestDTO.getAcuracia());
+        ataque.setDescricao(ataqueRequestDTO.getDescricao());
+        ataque.setCategoria(ataqueRequestDTO.getCategoria());
+        ataque.setPontosDePoder(ataqueRequestDTO.getPontosDePoder());
+        ataqueRepository.save(ataque);
+
+        return ResponseEntity.ok(new AtaqueResponseDTO(ataque.getId(), ataque.getAcuracia(), ataque.getForca(),
+                ataque.getPontosDePoder(), ataque.getDescricao(), ataque.getNome(), ataque.getCategoria(), tipo));
+    }
 }

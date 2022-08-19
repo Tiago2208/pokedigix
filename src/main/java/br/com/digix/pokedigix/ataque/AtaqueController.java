@@ -75,4 +75,6 @@ public class AtaqueController {
                 ataque.getPontosDePoder(), ataque.getDescricao(), ataque.getNome(), ataque.getCategoria(),
                 tipoResponseDTO));
     }
+
+    
 }
